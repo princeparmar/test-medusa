@@ -1,0 +1,13 @@
+{
+  "version": "v1",
+  "packages": {
+    "medusa-plugin-customer-email-verified": {
+      "signature": "71512ea85fddf9937184f30fd6401a11",
+      "file": true
+    },
+    "customer-registration": {
+      "signature": "0cca81122bdaa1a2e975c7fb81ca17cc",
+      "file": true
+    }
+  }
+}
