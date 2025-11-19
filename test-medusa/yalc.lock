@@ -6,7 +6,11 @@
       "file": true
     },
     "customer-registration": {
-      "signature": "0cca81122bdaa1a2e975c7fb81ca17cc",
+      "signature": "9645042751cda76cf41f24daa458756f",
+      "file": true
+    },
+    "dynamic-config": {
+      "signature": "51ef3c1c57b5da4c109a822b4f1770f7",
       "file": true
     }
   }

@@ -14,9 +14,79 @@ module.exports = defineConfig({
     }
   },
   plugins: [
+    // # SMTP Notification
+    // {
+    //   resolve: "@tsc_tech/medusa-plugin-smtp",
+    //   options: {
+    //     channels: ["email"],
+    //     fromEmail: process.env.SMTP_AUTH_USER,
+    //     transport: {
+    //       host: process.env.SMTP_HOST || "smtp.gmail.com",
+    //       port: process.env.SMTP_PORT || 465,
+    //       secure: process.env.SMTP_SECURE || false,
+    //       auth: {
+    //         user: process.env.SMTP_AUTH_USER,
+    //         pass: process.env.SMTP_AUTH_PASS,
+    //       },
+    //     },
+    //   },
+    // },
+    // # Customer Registration
     {
       resolve: "customer-registration",
-      options: {},
+      options: {
+        otpLength: 6,
+        otpCharset: "numeric",
+        otpExpiryMinutes: 15,
+        maxAttempts: 5,
+        email: {
+          channel: "email",
+          template: "otp-email-verify",
+          subject: "Verify your Medusa account",
+          resendThrottleSeconds: 90,
+          autoSendOnRegistration: true,
+        },
+        phone: {
+          channel: "sms",
+          template: "otp-phone-verify",
+          resendThrottleSeconds: 60,
+        },
+      },
+    },
+    // # Dynamic Config
+    {
+      resolve: "dynamic-config",
+      options: {
+        configs: {
+          "homepage-config": {
+            "id": "homepage-config",
+            "title": "Homepage Experiments",
+            "active": true,
+            "structure": [
+              {
+                "id": "homepage-banner",
+                "title": "Homepage Banner Copy",
+                "type": "object",
+                "children": [
+                  {
+                    "id": "homepage-banner-subtitle",
+                    "title": "Banner Subtitle",
+                    "defaultValue": "Limited time offer",
+                    "type": "short-text",
+                    "required": false
+                  }
+                ]
+              },
+              {
+                "id": "logo",
+                "title": "Company Logo",
+                "type": "file",
+                "required": false
+              }
+            ]
+          }
+        }        
+      }
     },
   ],
 })

@@ -26,7 +26,8 @@
     "@medusajs/cli": "2.11.3",
     "@medusajs/framework": "2.11.3",
     "@medusajs/medusa": "2.11.3",
-    "customer-registration": "file:.yalc/customer-registration"
+    "customer-registration": "file:.yalc/customer-registration",
+    "dynamic-config": "file:.yalc/dynamic-config"
   },
   "devDependencies": {
     "@medusajs/test-utils": "2.11.3",
