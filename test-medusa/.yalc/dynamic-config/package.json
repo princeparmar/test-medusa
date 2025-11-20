@@ -1,6 +1,6 @@
 {
   "name": "dynamic-config",
-  "version": "0.0.19",
+  "version": "0.0.22",
   "description": "A starter for Medusa plugins.",
   "author": "Medusa (https://medusajs.com)",
   "license": "MIT",
@@ -44,5 +44,5 @@
   "engines": {
     "node": ">=20"
   },
-  "yalcSig": "51ef3c1c57b5da4c109a822b4f1770f7"
+  "yalcSig": "e68a2836a78be98fe9a53f1d76fa457f"
 }
