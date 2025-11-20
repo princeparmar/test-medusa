@@ -32,30 +32,30 @@ module.exports = defineConfig({
     //   },
     // },
     // # Customer Registration
+    // {
+    //   resolve: "customer-registration",
+    //   options: {
+    //     otpLength: 6,
+    //     otpCharset: "numeric",
+    //     otpExpiryMinutes: 15,
+    //     maxAttempts: 5,
+    //     email: {
+    //       channel: "email",
+    //       template: "otp-email-verify",
+    //       subject: "Verify your Medusa account",
+    //       resendThrottleSeconds: 90,
+    //       autoSendOnRegistration: true,
+    //     },
+    //     phone: {
+    //       channel: "sms",
+    //       template: "otp-phone-verify",
+    //       resendThrottleSeconds: 60,
+    //     },
+    //   },
+    // },
+    // // # Dynamic Config
     {
-      resolve: "customer-registration",
-      options: {
-        otpLength: 6,
-        otpCharset: "numeric",
-        otpExpiryMinutes: 15,
-        maxAttempts: 5,
-        email: {
-          channel: "email",
-          template: "otp-email-verify",
-          subject: "Verify your Medusa account",
-          resendThrottleSeconds: 90,
-          autoSendOnRegistration: true,
-        },
-        phone: {
-          channel: "sms",
-          template: "otp-phone-verify",
-          resendThrottleSeconds: 60,
-        },
-      },
-    },
-    // # Dynamic Config
-    {
-      resolve: "dynamic-config",
+      resolve: "medusa-plugin-dynamic-config",
       options: {
         configs: {
           "homepage-config": {

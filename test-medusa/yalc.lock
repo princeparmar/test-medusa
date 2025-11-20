@@ -1,17 +1,4 @@
 {
   "version": "v1",
-  "packages": {
-    "medusa-plugin-customer-email-verified": {
-      "signature": "71512ea85fddf9937184f30fd6401a11",
-      "file": true
-    },
-    "customer-registration": {
-      "signature": "9645042751cda76cf41f24daa458756f",
-      "file": true
-    },
-    "dynamic-config": {
-      "signature": "e68a2836a78be98fe9a53f1d76fa457f",
-      "file": true
-    }
-  }
+  "packages": {}
 }
