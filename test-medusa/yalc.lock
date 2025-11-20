@@ -1,4 +1,9 @@
 {
   "version": "v1",
-  "packages": {}
+  "packages": {
+    "customer-registration": {
+      "signature": "580807652bdb40ec530df304796b0552",
+      "file": true
+    }
+  }
 }
