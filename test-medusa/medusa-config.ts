@@ -1,4 +1,4 @@
-import { loadEnv, defineConfig } from '@medusajs/framework/utils'
+import { loadEnv, defineConfig, Modules } from '@medusajs/framework/utils'
 
 loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
@@ -13,24 +13,48 @@ module.exports = defineConfig({
       cookieSecret: process.env.COOKIE_SECRET || "supersecret",
     }
   },
+  modules: {
+    [Modules.NOTIFICATION]: {
+      resolve: "@medusajs/notification",
+      options: {
+        providers: [
+          {
+            resolve: "@tsc_tech/medusa-plugin-smtp/providers/smtp",
+            id: "notification-smtp",
+            options: {
+              channels: ["email"],
+              fromEmail: process.env.SMTP_FROM || process.env.SMTP_AUTH_USER,
+              transport: {
+                host: process.env.SMTP_HOST || "smtp.gmail.com",
+                port: Number(process.env.SMTP_PORT) || 465,
+                secure: process.env.SMTP_SECURE === "true" || true,
+                auth: {
+                  user: process.env.SMTP_AUTH_USER,
+                  pass: process.env.SMTP_AUTH_PASS,
+                },
+              },
+            },
+          },
+        ],
+      },
+    },
+    reviews: {
+      resolve: "medusa-review-rating",
+    },
+  },
   plugins: [
-    // # SMTP Notification
-    // {
-    //   resolve: "@tsc_tech/medusa-plugin-smtp",
-    //   options: {
-    //     channels: ["email"],
-    //     fromEmail: process.env.SMTP_AUTH_USER,
-    //     transport: {
-    //       host: process.env.SMTP_HOST || "smtp.gmail.com",
-    //       port: process.env.SMTP_PORT || 465,
-    //       secure: process.env.SMTP_SECURE || false,
-    //       auth: {
-    //         user: process.env.SMTP_AUTH_USER,
-    //         pass: process.env.SMTP_AUTH_PASS,
-    //       },
-    //     },
-    //   },
-    // },
+    // # Review Rating
+    {
+      resolve: "medusa-review-rating",
+      options: {
+        // Add any plugin options here
+      },
+    },
+    // # medusa-admin-category
+    {
+      resolve: "medusa-admin-category",
+      options: {}
+    },
     // # Customer Registration
     {
       resolve: "customer-registration",
@@ -117,7 +141,7 @@ module.exports = defineConfig({
               }
             ]
           }
-        }  
+        }
       }
     },
   ],

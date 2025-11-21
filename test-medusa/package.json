@@ -26,8 +26,13 @@
     "@medusajs/cli": "2.11.3",
     "@medusajs/framework": "2.11.3",
     "@medusajs/medusa": "2.11.3",
+    "@medusajs/notification": "^2.11.3",
+    "@tsc_tech/medusa-plugin-smtp": "^0.0.3",
     "customer-registration": "file:.yalc/customer-registration",
-    "medusa-plugin-dynamic-config": "^0.0.22"
+    "medusa-admin-category": "file:.yalc/medusa-admin-category",
+    "medusa-plugin-dynamic-config": "^0.0.22",
+    "medusa-review-rating": "0.0.8",
+    "nodemailer": "^7.0.10"
   },
   "devDependencies": {
     "@medusajs/test-utils": "2.11.3",

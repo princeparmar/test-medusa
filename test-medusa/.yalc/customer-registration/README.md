@@ -4,7 +4,7 @@ A lean Medusa v2 plugin that hardens customer onboarding, guarantees both `email
 
 ## Features
 
-- Overrides `POST /store/customers` with a drop-in route handler.
+- Listens to Medusa's native `customer.created` event, so OTP automation works without overriding `POST /store/customers`.
 - Forces `email_verified = false` and `phone_verified = false` for every new customer, regardless of the request payload.
 - Automatically generates & sends an email OTP right after registration (configurable) using the Notification module + whatever providers your project already registered.
 - Adds dedicated email + phone OTP endpoints for resending and verifying codes while marking the corresponding `*_verified` flags to `true`.
@@ -54,9 +54,9 @@ yarn dev
 
 ## Usage
 
-### Registration override
+### Registration lifecycle hook
 
-When a shopper registers via `POST /store/customers`, the plugin intercepts the request, normalizes the payload, and always persists `email_verified = false` and `phone_verified = false`. The rest of Medusa’s default behavior is preserved by deferring to the Customer Module service. If `email.autoSendOnRegistration` is enabled (default), the plugin immediately issues an email OTP through the Notification module using the user's configured providers.
+The plugin no longer overrides `POST /store/customers`. Instead, it listens to the `customer.created` event and automatically issues an email OTP (when `email.autoSendOnRegistration` is enabled). Because the default Medusa route still handles persistence and response formatting, there are no behavioral differences for registration requests aside from the verification guard.
 
 ### OTP endpoints
 
@@ -126,6 +126,54 @@ Response:
 2. **Auto email OTP (optional)** – if `email.autoSendOnRegistration` is `true`, the plugin immediately emails the code.  
 3. **Resend OTP** – expose “Resend email/phone code” buttons that hit `POST /store/customers/email/otp/verify` or `POST /store/customers/phone/otp/send`.  
 4. **Verify** – when the user submits the code, call the corresponding verify endpoint; the plugin marks the customer as verified and returns the updated customer object.
+
+### End-to-end OTP integration guide
+
+Follow this sequence to enforce verification before login. Each step shows the minimal payloads and cURL commands your storefront or test suite can run.
+
+1. **Register the customer (no cookies returned)**  
+   ```bash
+   curl -X POST http://localhost:9000/store/customers \
+     -H "Content-Type: application/json" \
+     -d '{
+       "first_name": "Ava",
+       "last_name": "Lopez",
+       "email": "ava@example.com",
+       "password": "S3cret!123"
+     }'
+   ```
+   The response contains `customer.email_verified = false`. If `email.autoSendOnRegistration` is enabled, an OTP is already dispatched (and logged to the console when no notification module is configured).
+
+2. **Verify the email OTP**  
+   ```bash
+   curl -X POST http://localhost:9000/store/customers/email/otp/verify \
+     -H "Content-Type: application/json" \
+     -d '{
+       "email": "ava@example.com",
+       "code": "123456"
+     }'
+   ```
+   On success the returned customer now has `email_verified = true`. If an incorrect or expired code is provided, you receive a `400` or `403` style Medusa error describing the reason and you can prompt the shopper to retry.
+
+3. **Login via Medusa auth endpoint (email verification enforced)**  
+   The plugin overrides `POST /auth/customer/emailpass` so tokens issue only when `email_verified` is true.
+   ```bash
+   curl -X POST http://localhost:9000/auth/customer/emailpass \
+     -H "Content-Type: application/json" \
+     -d '{
+       "email": "ava@example.com",
+       "password": "S3cret!123"
+     }'
+   ```
+   - If the email is verified, the response matches Medusa core (`{ "token": "..." }`).
+   - If not verified, the route returns `401` with `message: "Please verify your email before logging in."`
+
+4. **(Optional) Phone verification gating**  
+   - During registration and OTP verification responses you always receive the latest `phone_verified` flag alongside `email_verified`.
+   - In an account or profile screen, read these flags from `GET /store/customers/me`. When `phone_verified` is `false`, show a CTA that calls `POST /store/customers/phone/otp/send` and `POST /store/customers/phone/otp/verify` just like the email flow.  
+   - Once both flags are true, hide the prompts or replace them with a “Verified” badge.
+
+> Hint: For QA environments without providers, OTP codes are logged with the `[customer-registration] OTP dispatch fallback` prefix so testers can copy/paste them while still exercising the full API surface.
 
 ### Configuration reference
 

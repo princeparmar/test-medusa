@@ -1,6 +1,6 @@
 {
   "name": "customer-registration",
-  "version": "0.0.36",
+  "version": "0.0.46",
   "description": "Medusa plugin that overrides store customer registration and enforces email/phone verification flags.",
   "author": "Medusa (https://medusajs.com)",
   "license": "MIT",
@@ -34,5 +34,5 @@
   "engines": {
     "node": ">=20"
   },
-  "yalcSig": "580807652bdb40ec530df304796b0552"
+  "yalcSig": "af89e7678d34b1c0763e543b293ffa48"
 }
