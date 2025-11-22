@@ -55,25 +55,36 @@ module.exports = defineConfig({
       resolve: "medusa-admin-category",
       options: {}
     },
-    // # Customer Registration
     {
       resolve: "customer-registration",
       options: {
-        otpLength: 6,
-        otpCharset: "numeric",
-        otpExpiryMinutes: 15,
-        maxAttempts: 5,
-        email: {
-          channel: "email",
-          template: "otp-email-verify",
-          subject: "Verify your Medusa account",
-          resendThrottleSeconds: 90,
-          autoSendOnRegistration: true,
+        // OTP generation settings
+        otpLength: 6,                    // OTP code length
+        otpCharset: "numeric",           // "numeric" | "alphanumeric"
+        otpExpiryMinutes: 15,            // OTP expiration time
+        maxAttempts: 5,                  // Max verification attempts
+    
+        // Email verification configuration
+        email_verification: {
+          channel: "email",              // Notification channel name
+          template: "/Users/pradipparmar/git/ecommerce/test-medusa/test-medusa/src/templates/emails/otp-email-verify.html",  // Optional template ID
+          subject: "Verify your email",  // Email subject
+          resendThrottleSeconds: 90,     // Throttle between resends
         },
-        phone: {
-          channel: "sms",
-          template: "otp-phone-verify",
-          resendThrottleSeconds: 60,
+    
+        // Phone verification configuration
+        phone_verification: {
+          channel: "sms",                // Notification channel name
+          template: "/Users/pradipparmar/git/ecommerce/test-medusa/test-medusa/src/templates/emails/otp-phone-verify.html",  // Optional template ID
+          resendThrottleSeconds: 60,     // Throttle between resends
+        },
+    
+        // Forgot password configuration
+        forgot_password: {
+          channel: "email",              // Notification channel name
+          template: "/Users/pradipparmar/git/ecommerce/test-medusa/test-medusa/src/templates/emails/forgot-password.html",   // Optional template ID
+          subject: "Reset your password", // Email subject
+          resendThrottleSeconds: 120,    // Throttle between resends
         },
       },
     },
