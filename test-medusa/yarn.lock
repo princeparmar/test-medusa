@@ -6895,8 +6895,10 @@ csv-parse@^5.6.0:
   integrity sha512-l3nz3euub2QMg5ouu5U09Ew9Wf6/wQ8I++ch1loQ0ljmzhmfZYrH9fflS22i/PQEvsPvxCwxgz5q7UB8K1JO4Q==
 
 "customer-registration@file:.yalc/customer-registration":
-  version "0.0.68"
+  version "0.0.88"
   resolved "file:.yalc/customer-registration"
+  dependencies:
+    jsonwebtoken "^9.0.2"
 
 cva@1.0.0-beta.1:
   version "1.0.0-beta.1"

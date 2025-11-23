@@ -2,7 +2,7 @@
   "version": "v1",
   "packages": {
     "customer-registration": {
-      "signature": "bc9eb59375043844520df4f0cad8fc9c",
+      "signature": "1f9de7dc312185ac1ad32a8dc4694800",
       "file": true
     },
     "medusa-review-rating": {
