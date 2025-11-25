@@ -31,6 +31,7 @@
     "customer-registration": "file:.yalc/customer-registration",
     "medusa-admin-category": "file:.yalc/medusa-admin-category",
     "medusa-plugin-dynamic-config": "^0.0.22",
+    "medusa-product-helper": "^0.0.5",
     "medusa-review-rating": "0.0.8",
     "nodemailer": "^7.0.10"
   },

@@ -6895,7 +6895,7 @@ csv-parse@^5.6.0:
   integrity sha512-l3nz3euub2QMg5ouu5U09Ew9Wf6/wQ8I++ch1loQ0ljmzhmfZYrH9fflS22i/PQEvsPvxCwxgz5q7UB8K1JO4Q==
 
 "customer-registration@file:.yalc/customer-registration":
-  version "0.0.88"
+  version "0.0.104"
   resolved "file:.yalc/customer-registration"
   dependencies:
     jsonwebtoken "^9.0.2"
@@ -9010,6 +9010,13 @@ medusa-plugin-dynamic-config@^0.0.22:
   version "0.0.22"
   resolved "https://registry.npmjs.org/medusa-plugin-dynamic-config/-/medusa-plugin-dynamic-config-0.0.22.tgz"
   integrity sha512-aLumdEQRkx08OJn6/68FGvlJMTPPeubfFSN+486UI31Mu1jEE4IePXANF9WufTjCrHOgTCB1NWoZ0P/ABqsqCw==
+
+medusa-product-helper@^0.0.5:
+  version "0.0.5"
+  resolved "https://registry.npmjs.org/medusa-product-helper/-/medusa-product-helper-0.0.5.tgz"
+  integrity sha512-GkoCqGECrfrd6npPLR57do6VqWbqvbri4QCTgrB3savW+1lEvEqW5mPxR1Lc2Dll2PXc+B5rnqEUc0h4g0XqHg==
+  dependencies:
+    zod "^3.23.8"
 
 medusa-review-rating@0.0.8:
   version "0.0.8"
@@ -11516,7 +11523,7 @@ zod-validation-error@3.5.1:
   resolved "https://registry.npmjs.org/zod-validation-error/-/zod-validation-error-3.5.1.tgz"
   integrity sha512-ozT8jy2nHaeKjaRIEThwgRXBwm16hAy0BaTRx1I2IY1xrezPegmlFmYKb5tcvYqZDQm0sfZtDr2IR7CdCJzTGw==
 
-zod@^3.25.0, zod@3.25.76:
+zod@^3.23.8, zod@^3.25.0, zod@3.25.76:
   version "3.25.76"
   resolved "https://registry.npmjs.org/zod/-/zod-3.25.76.tgz"
   integrity sha512-gzUt/qt81nXsFGKIFcC3YnfEAx5NkunCfnDlvuBSSFS02bcXu4Lmea0AFIUwbLWxWPx3d9p8S5QoaujKcNQxcQ==
