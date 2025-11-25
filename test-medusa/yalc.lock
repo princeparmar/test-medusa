@@ -12,6 +12,11 @@
     "medusa-admin-category": {
       "signature": "f1c08bd55159e26b9c3063c4dc5a384d",
       "file": true
+    },
+    "medusa-product-helper": {
+      "signature": "3a01fdcf55939eaa79353003949e42d9",
+      "file": true,
+      "replaced": "^0.0.9"
     }
   }
 }
