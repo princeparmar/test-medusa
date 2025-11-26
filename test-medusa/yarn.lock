@@ -9006,6 +9006,12 @@ media-typer@0.3.0:
   version "0.0.6"
   resolved "file:.yalc/medusa-admin-category"
 
+"medusa-contact-us@file:.yalc/medusa-contact-us":
+  version "0.0.4"
+  resolved "file:.yalc/medusa-contact-us"
+  dependencies:
+    zod "^3.23.8"
+
 medusa-plugin-dynamic-config@^0.0.22:
   version "0.0.22"
   resolved "https://registry.npmjs.org/medusa-plugin-dynamic-config/-/medusa-plugin-dynamic-config-0.0.22.tgz"
@@ -9018,7 +9024,7 @@ medusa-plugin-dynamic-config@^0.0.22:
     zod "^3.23.8"
 
 "medusa-review-rating@file:.yalc/medusa-review-rating":
-  version "0.0.17"
+  version "0.0.30"
   resolved "file:.yalc/medusa-review-rating"
   dependencies:
     customer-registration "file:.yalc/customer-registration"

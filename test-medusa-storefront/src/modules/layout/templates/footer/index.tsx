@@ -3,6 +3,7 @@ import { listCollections } from "@lib/data/collections"
 import { Text, clx } from "@medusajs/ui"
 
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
+import EmailSubscriptionForm from "@modules/contact/components/email-subscription-form"
 import MedusaCTA from "@modules/layout/components/medusa-cta"
 
 export default async function Footer() {
@@ -23,7 +24,7 @@ export default async function Footer() {
               Medusa Store
             </LocalizedClientLink>
           </div>
-          <div className="text-small-regular gap-10 md:gap-x-16 grid grid-cols-2 sm:grid-cols-3">
+          <div className="text-small-regular gap-10 md:gap-x-16 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4">
             {productCategories && productCategories?.length > 0 && (
               <div className="flex flex-col gap-y-2">
                 <span className="txt-small-plus txt-ui-fg-base">
@@ -115,7 +116,7 @@ export default async function Footer() {
                   <a
                     href="https://github.com/medusajs"
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noreferrer noopener"
                     className="hover:text-ui-fg-base"
                   >
                     GitHub
@@ -125,7 +126,7 @@ export default async function Footer() {
                   <a
                     href="https://docs.medusajs.com"
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noreferrer noopener"
                     className="hover:text-ui-fg-base"
                   >
                     Documentation
@@ -135,13 +136,25 @@ export default async function Footer() {
                   <a
                     href="https://github.com/medusajs/nextjs-starter-medusa"
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noreferrer noopener"
                     className="hover:text-ui-fg-base"
                   >
                     Source code
                   </a>
                 </li>
               </ul>
+            </div>
+            <div className="flex flex-col gap-y-3 max-w-sm">
+              <span className="txt-small-plus txt-ui-fg-base">Stay updated</span>
+              <p className="text-sm text-ui-fg-subtle">
+                Subscribe for launch announcements, fit guides, and exclusive offers.
+              </p>
+              <EmailSubscriptionForm
+                layout="inline"
+                source="footer_form"
+                placeholder="you@example.com"
+                buttonLabel="Subscribe"
+              />
             </div>
           </div>
         </div>

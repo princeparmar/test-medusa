@@ -18,6 +18,10 @@
       "signature": "3a01fdcf55939eaa79353003949e42d9",
       "file": true,
       "replaced": "^0.0.9"
+    },
+    "medusa-contact-us": {
+      "signature": "6a4f6aab354e3cd9c183f8ed2a94d84e",
+      "file": true
     }
   }
 }

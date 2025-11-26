@@ -30,6 +30,7 @@
     "@tsc_tech/medusa-plugin-smtp": "^0.0.3",
     "customer-registration": "file:.yalc/customer-registration",
     "medusa-admin-category": "file:.yalc/medusa-admin-category",
+    "medusa-contact-us": "file:.yalc/medusa-contact-us",
     "medusa-plugin-dynamic-config": "^0.0.22",
     "medusa-product-helper": "file:.yalc/medusa-product-helper",
     "medusa-review-rating": "file:.yalc/medusa-review-rating",

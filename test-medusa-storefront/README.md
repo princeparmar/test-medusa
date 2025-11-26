@@ -208,6 +208,23 @@ This starter already mounts a `ProductReviewsSection` on the product page:
 
 Once both backend and frontend configuration steps are complete, the review block renders automatically without additional wiring.
 
+# Contact & Subscriptions
+
+The contact page and newsletter blocks are powered by the [`medusa-contact-us`](https://www.npmjs.com/package/medusa-contact-us) plugin.
+
+1. **Backend**: Follow the plugin README to register it in `medusa-config.ts`, run the migrations, and configure notification templates/status workflows.
+2. **Storefront**: Set `MEDUSA_BACKEND_URL` and `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY`. The `/[countryCode]/contact` route will render the contact form using `submitContactRequest`, and the footer + contact page reuse `upsertContactSubscription`.
+3. **Custom forms**: Import helpers directly to avoid hand-written fetch calls:
+
+   ```ts
+   import { submitContactRequest, upsertContactSubscription } from "medusa-contact-us"
+
+   await submitContactRequest({ email, payload: { subject, message } }, helperOptions)
+   await upsertContactSubscription({ email, status: "subscribed" }, helperOptions)
+   ```
+
+`helperOptions` should always include `baseUrl` and a publishable API key (or a configured Medusa JS client) so requests can be authenticated on the Store API.
+
 # Resources
 
 ## Learn more about Medusa
