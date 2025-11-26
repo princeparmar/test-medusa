@@ -6,8 +6,9 @@
       "file": true
     },
     "medusa-review-rating": {
-      "signature": "34e02a6dba212d5d2f1098ec17405a98",
-      "file": true
+      "signature": "8959ee4181328d276c429ac8c57feeee",
+      "file": true,
+      "replaced": "^0.0.8"
     },
     "medusa-admin-category": {
       "signature": "f1c08bd55159e26b9c3063c4dc5a384d",

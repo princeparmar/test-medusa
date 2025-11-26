@@ -3,6 +3,7 @@ import React, { Suspense } from "react"
 import ImageGallery from "@modules/products/components/image-gallery"
 import ProductActions from "@modules/products/components/product-actions"
 import ProductOnboardingCta from "@modules/products/components/product-onboarding-cta"
+import ProductReviews from "@modules/products/components/product-reviews"
 import ProductTabs from "@modules/products/components/product-tabs"
 import RelatedProducts from "@modules/products/components/related-products"
 import ProductInfo from "@modules/products/templates/product-info"
@@ -17,6 +18,7 @@ type ProductTemplateProps = {
   region: HttpTypes.StoreRegion
   countryCode: string
   images: HttpTypes.StoreProductImage[]
+  customer?: HttpTypes.StoreCustomer | null
 }
 
 const ProductTemplate: React.FC<ProductTemplateProps> = ({
@@ -24,6 +26,7 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
   region,
   countryCode,
   images,
+  customer,
 }) => {
   if (!product || !product.id) {
     return notFound()
@@ -57,6 +60,17 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
           </Suspense>
         </div>
       </div>
+      <div className="content-container my-12">
+        <Suspense fallback={<ProductReviewsFallback />}>
+          <ProductReviews
+            productId={product.id}
+            productHandle={product.handle}
+            productTitle={product.title}
+            countryCode={countryCode}
+            customer={customer ?? null}
+          />
+        </Suspense>
+      </div>
       <div
         className="content-container my-16 small:my-32"
         data-testid="related-products-container"
@@ -68,5 +82,16 @@ const ProductTemplate: React.FC<ProductTemplateProps> = ({
     </>
   )
 }
+
+const ProductReviewsFallback = () => (
+  <div className="rounded-2xl border border-ui-border-base bg-ui-bg-subtle p-6">
+    <div className="h-4 w-1/3 rounded bg-ui-border-base/70" />
+    <div className="mt-4 space-y-3">
+      <div className="h-3 rounded bg-ui-border-base/50" />
+      <div className="h-3 rounded bg-ui-border-base/40" />
+      <div className="h-3 rounded bg-ui-border-base/30" />
+    </div>
+  </div>
+)
 
 export default ProductTemplate

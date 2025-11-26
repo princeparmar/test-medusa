@@ -9011,17 +9011,17 @@ medusa-plugin-dynamic-config@^0.0.22:
   resolved "https://registry.npmjs.org/medusa-plugin-dynamic-config/-/medusa-plugin-dynamic-config-0.0.22.tgz"
   integrity sha512-aLumdEQRkx08OJn6/68FGvlJMTPPeubfFSN+486UI31Mu1jEE4IePXANF9WufTjCrHOgTCB1NWoZ0P/ABqsqCw==
 
-medusa-product-helper@^0.0.9:
-  version "0.0.9"
-  resolved "https://registry.npmjs.org/medusa-product-helper/-/medusa-product-helper-0.0.9.tgz"
-  integrity sha512-lPU79ZytcYYG/IT49n2RyFdIKkV1DmCwpG+uxR16dC77Mzzgb4ndaGc8iaXUFTNlOaYI6YDYCxhD4QC9V2NADQ==
+"medusa-product-helper@file:.yalc/medusa-product-helper":
+  version "0.0.10"
+  resolved "file:.yalc/medusa-product-helper"
   dependencies:
     zod "^3.23.8"
 
-medusa-review-rating@0.0.8:
-  version "0.0.8"
-  resolved "https://registry.npmjs.org/medusa-review-rating/-/medusa-review-rating-0.0.8.tgz"
-  integrity sha512-1QG9R6a+kmUDv5O40WkYc4s/Ed9+00WAcwOxh3SigsF+EMvIO2PO4OYI74YzDXY/tM4bIKTc/zZwJWSRbcRczg==
+"medusa-review-rating@file:.yalc/medusa-review-rating":
+  version "0.0.17"
+  resolved "file:.yalc/medusa-review-rating"
+  dependencies:
+    customer-registration "file:.yalc/customer-registration"
 
 merge-descriptors@1.0.3:
   version "1.0.3"

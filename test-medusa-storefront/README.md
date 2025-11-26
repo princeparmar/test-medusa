@@ -110,6 +110,104 @@ NEXT_PUBLIC_STRIPE_KEY=<your-stripe-public-key>
 
 You'll also need to setup the integrations in your Medusa server. See the [Medusa documentation](https://docs.medusajs.com) for more information on how to configure [Stripe](https://docs.medusajs.com/resources/commerce-modules/payment/payment-provider/stripe#main).
 
+# Reviews & Ratings
+
+The storefront ships with built-in support for the [`medusa-review-rating`](https://www.npmjs.com/package/medusa-review-rating) plugin. Follow the steps below to enable end-to-end product reviews and aggregate ratings.
+
+## 1. Install & configure the Medusa plugin (Backend)
+
+1. In your Medusa backend, install the plugin:
+
+   ```bash
+   yarn add medusa-review-rating
+   ```
+
+2. Register it in `medusa-config.ts`:
+
+   ```ts
+   modules: {
+     reviews: {
+       resolve: "medusa-review-rating",
+       options: {
+         autoApprove: false,
+         requireVerifiedPurchase: false,
+       },
+     },
+   },
+   plugins: [{ resolve: "medusa-review-rating" }]
+   ```
+
+3. Run the plugin migrations so the `review` table and rating columns exist:
+
+   ```bash
+   npx medusa db:migrate
+   ```
+
+4. Restart your Medusa server.
+
+## 2. Configure the storefront
+
+1. Install the helper package (already referenced in `package.json` but shown here for clarity):
+
+   ```bash
+   yarn add medusa-review-rating
+   ```
+
+2. Provide the API base URL and publishable key so the helpers can call the review routes. Add the following to `.env.local`:
+
+   ```bash
+   MEDUSA_BACKEND_URL=http://localhost:9000          # your Medusa server
+   NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=pk_test_xxx     # create in Medusa dashboard
+   ```
+
+3. (Optional) If your storefront is deployed separately from the Medusa server, update `MEDUSA_BACKEND_URL` to the public Store API URL (e.g., `https://store.myshop.com`).
+
+## 3. Using the helpers
+
+Import review helpers anywhere in your app code:
+
+```ts
+import {
+  submitReview,
+  listCustomerReviews,
+  listCustomerProductReviews,
+  listProductReviews,
+  getProductRating,
+  type StorefrontHelperOptions,
+} from "medusa-review-rating/helpers"
+
+const options: StorefrontHelperOptions = {
+  baseUrl: process.env.MEDUSA_BACKEND_URL,
+  publishableApiKey: process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY,
+}
+
+await submitReview(
+  { product_id: "prod_123", rating: 5, title: "Great!", description: "Loved it" },
+  options
+)
+
+const rating = await getProductRating("prod_123", options)
+```
+
+If you already have an instantiated Medusa JS SDK client, you can pass it instead of `baseUrl` + `publishableApiKey`:
+
+```ts
+import { Medusa } from "@medusajs/js-sdk"
+const medusa = new Medusa({ baseUrl: "https://store.myshop.com", publishableKey: "pk_xxx" })
+
+const rating = await getProductRating("prod_123", { client: medusa })
+```
+
+## 4. Frontend UI
+
+This starter already mounts a `ProductReviewsSection` on the product page:
+
+- Signed-in customers can submit reviews through the form.
+- Logged-out visitors see a sign-in prompt.
+- Public reviews and rating summaries are fetched during SSR/Suspense via the helpers above.
+
+Once both backend and frontend configuration steps are complete, the review block renders automatically without additional wiring.
+
 # Resources
 
 ## Learn more about Medusa

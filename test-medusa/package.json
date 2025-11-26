@@ -32,7 +32,7 @@
     "medusa-admin-category": "file:.yalc/medusa-admin-category",
     "medusa-plugin-dynamic-config": "^0.0.22",
     "medusa-product-helper": "file:.yalc/medusa-product-helper",
-    "medusa-review-rating": "0.0.8",
+    "medusa-review-rating": "file:.yalc/medusa-review-rating",
     "nodemailer": "^7.0.10"
   },
   "devDependencies": {
