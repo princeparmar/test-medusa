@@ -50,17 +50,24 @@ const sanitizePayload = (payload: Record<string, unknown>) => {
       if (typeof value === "string") {
         return value.trim().length > 0
       }
-
+      // Include boolean values (they're valid even if false)
+      if (typeof value === "boolean") {
+        return true
+      }
       return value !== undefined && value !== null
     })
   )
 }
 
+// Email validation regex
+const EMAIL_REGEX = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i
+
 export const submitContactRequestAction = async (
   _prevState: ContactFormActionState = CONTACT_INITIAL_STATE,
   formData: FormData
 ): Promise<ContactFormActionState> => {
-  const email = (formData.get("email") as string)?.trim()
+  const emailRaw = formData.get("email")
+  const email = emailRaw ? (emailRaw as string).trim().toLowerCase() : ""
   const subject = (formData.get("subject") as string)?.trim() ?? ""
   const message = (formData.get("message") as string)?.trim() ?? ""
   const priority = (formData.get("priority") as string)?.trim() ?? ""
@@ -72,25 +79,46 @@ export const submitContactRequestAction = async (
   const source = (formData.get("source") as string)?.trim() || "contact_page"
   const countryCode = (formData.get("country_code") as string)?.toLowerCase()
 
+  // Validate email format
   if (!email) {
     return { status: "error", message: "Email is required." }
+  }
+  if (!EMAIL_REGEX.test(email)) {
+    return { status: "error", message: "Please enter a valid email address." }
   }
 
   if (!subject || !message) {
     return { status: "error", message: "Please provide a subject and message." }
   }
 
-  const payload = sanitizePayload({
+  // Build payload matching backend configuration
+  // Required fields: subject, message
+  // Optional fields: priority, order_number, phone, preferred_contact_method, is_return_request
+  const payload: Record<string, unknown> = {
     subject,
     message,
-    priority,
-    order_number: orderNumber,
-    phone,
-    preferred_contact_method: preferredContactMethod,
-    is_return_request: isReturnRequest,
-  })
+  }
+
+  // Add optional fields only if they have values
+  if (priority) {
+    payload.priority = priority
+  }
+  if (orderNumber) {
+    payload.order_number = orderNumber
+  }
+  if (phone) {
+    payload.phone = phone
+  }
+  if (preferredContactMethod) {
+    payload.preferred_contact_method = preferredContactMethod
+  }
+  // Only include is_return_request if it's true (matches curl example)
+  if (isReturnRequest) {
+    payload.is_return_request = true
+  }
 
   try {
+    // Email is already validated and lowercased above
     await submitContactRequest(
       {
         email,

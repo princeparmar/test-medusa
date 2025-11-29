@@ -2918,10 +2918,10 @@
   resolved "https://registry.npmjs.org/@pkgjs/parseargs/-/parseargs-0.11.0.tgz"
   integrity sha512-+1VkjdD0QBLPodGrJUeqarH8VAIvQODIbwh9XpP5Syisf7YoQgsJKPNFoqqLQlu+VQ/tVSshMR6loPMn8U+dPg==
 
-"@posthog/core@1.5.2":
-  version "1.5.2"
-  resolved "https://registry.npmjs.org/@posthog/core/-/core-1.5.2.tgz"
-  integrity sha512-iedUP3EnOPPxTA2VaIrsrd29lSZnUV+ZrMnvY56timRVeZAXoYCkmjfIs3KBAsF8OUT5h1GXLSkoQdrV0r31OQ==
+"@posthog/core@1.6.0":
+  version "1.6.0"
+  resolved "https://registry.npmjs.org/@posthog/core/-/core-1.6.0.tgz"
+  integrity sha512-Tbh8UACwbb7jFdDC7wwXHtfNzO+4wKh3VbyMHmp2UBe6w1jliJixexTJNfkqdGZm+ht3M10mcKvGGPnoZ2zLBg==
   dependencies:
     cross-spawn "^7.0.6"
 
@@ -9006,6 +9006,13 @@ media-typer@0.3.0:
   version "0.0.6"
   resolved "file:.yalc/medusa-admin-category"
 
+medusa-contact-us@^0.0.21:
+  version "0.0.21"
+  resolved "https://registry.npmjs.org/medusa-contact-us/-/medusa-contact-us-0.0.21.tgz"
+  integrity sha512-tUK1uhKhcl7n8cfiNVo38m71bxiHisFdHLUMnTmddjpkM8VaotgpHCtc8SAw1SvBXEjDsti4QKcxkFHxdz+NWA==
+  dependencies:
+    zod "^3.23.8"
+
 medusa-plugin-dynamic-config@^0.0.22:
   version "0.0.22"
   resolved "https://registry.npmjs.org/medusa-plugin-dynamic-config/-/medusa-plugin-dynamic-config-0.0.22.tgz"
@@ -9018,7 +9025,7 @@ medusa-plugin-dynamic-config@^0.0.22:
     zod "^3.23.8"
 
 "medusa-review-rating@file:.yalc/medusa-review-rating":
-  version "0.0.30"
+  version "0.0.31"
   resolved "file:.yalc/medusa-review-rating"
 
 merge-descriptors@1.0.3:
@@ -9719,11 +9726,6 @@ picomatch@^2.3.1:
   resolved "https://registry.npmjs.org/picomatch/-/picomatch-2.3.1.tgz"
   integrity sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==
 
-picomatch@3.x:
-  version "3.0.1"
-  resolved "https://registry.npmjs.org/picomatch/-/picomatch-3.0.1.tgz"
-  integrity sha512-I3EurrIQMlRc9IaAZnqRR044Phh2DXY+55o7uJ0V+hYZAcQYSuFWsc9q5PvyDHUSCe1Qxn/iBz+78s86zWnGag==
-
 pify@^2.3.0:
   version "2.3.0"
   resolved "https://registry.npmjs.org/pify/-/pify-2.3.0.tgz"
@@ -9846,16 +9848,16 @@ postgres-interval@4.0.2:
   integrity sha512-EMsphSQ1YkQqKZL2cuG0zHkmjCCzQqQ71l2GXITqRwjhRleCdv00bDk/ktaSi0LnlaPzAc3535KTrjXsTdtx7A==
 
 posthog-node@^5.11.0:
-  version "5.11.2"
-  resolved "https://registry.npmjs.org/posthog-node/-/posthog-node-5.11.2.tgz"
-  integrity sha512-z+XekcBUmGePMsjPlGaEF2bJFiDHKHYPQjS4OEw4YPDQz8s7Owuim/L7xNX+6UJkyIRniBza9iC7bW8yrGTv1g==
+  version "5.14.1"
+  resolved "https://registry.npmjs.org/posthog-node/-/posthog-node-5.14.1.tgz"
+  integrity sha512-NbqZMCwHectzfeFOeLqes1fPg/V5bsKhrBfyH1qHEcDb4ZHcbDARcqLE6JDhwMDQKa4YHkInXHITYscMuPylFw==
   dependencies:
-    "@posthog/core" "1.5.2"
+    "@posthog/core" "1.6.0"
 
 prettier@^3.5.3:
-  version "3.6.2"
-  resolved "https://registry.npmjs.org/prettier/-/prettier-3.6.2.tgz"
-  integrity sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==
+  version "3.7.2"
+  resolved "https://registry.npmjs.org/prettier/-/prettier-3.7.2.tgz"
+  integrity sha512-n3HV2J6QhItCXndGa3oMWvWFAgN1ibnS7R9mt6iokScBOC0Ul9/iZORmU2IWUMcyAQaMPjTlY3uT34TqocUxMA==
 
 pretty-format@^29.0.0, pretty-format@^29.7.0:
   version "29.7.0"

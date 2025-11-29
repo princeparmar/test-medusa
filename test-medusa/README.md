@@ -55,11 +55,27 @@ To create additional admin users, use:
 npx medusa user -e your-email@example.com -p your-password
 ```
 
+## Plugins & Integrations
+
+### Contact Us Plugin
+
+The project includes the `medusa-contact-us` plugin for managing contact requests and email subscriptions.
+
+**Integration Guide:** See [CONTACT_US_INTEGRATION.md](./CONTACT_US_INTEGRATION.md) for complete setup instructions.
+
+**Quick Start:**
+1. Plugin is already installed and configured in `medusa-configs/plugins/contact-us.ts`
+2. Modules are registered in `medusa-configs/modules.ts`
+3. Run migrations: `npx medusa db:migrate`
+4. Restart server: `npm run dev`
+
+**API Examples:** See [CONTACT_US_CURL_EXAMPLES.md](./CONTACT_US_CURL_EXAMPLES.md)
+
 ## What is Medusa
 
 Medusa is a set of commerce modules and tools that allow you to build rich, reliable, and performant commerce applications without reinventing core commerce logic. The modules can be customized and used to build advanced ecommerce stores, marketplaces, or any product that needs foundational commerce primitives. All modules are open-source and freely available on npm.
 
-Learn more about [Medusa’s architecture](https://docs.medusajs.com/learn/introduction/architecture) and [commerce modules](https://docs.medusajs.com/learn/fundamentals/modules/commerce-modules) in the Docs.
+Learn more about [Medusa's architecture](https://docs.medusajs.com/learn/introduction/architecture) and [commerce modules](https://docs.medusajs.com/learn/fundamentals/modules/commerce-modules) in the Docs.
 
 ## Community & Contributions
 

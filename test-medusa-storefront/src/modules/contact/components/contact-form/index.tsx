@@ -105,7 +105,13 @@ const ContactForm = ({ countryCode }: ContactFormProps) => {
             autoComplete="email"
             placeholder="you@example.com"
             className={inputClasses}
-            {...register("email", { required: "Email is required." })}
+            {...register("email", {
+              required: "Email is required.",
+              pattern: {
+                value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                message: "Please enter a valid email address.",
+              },
+            })}
             disabled={isPending}
           />
         </Field>
@@ -117,10 +123,10 @@ const ContactForm = ({ countryCode }: ContactFormProps) => {
         >
           <input
             type="text"
-            placeholder="e.g., Order inquiry"
+            placeholder="Enter subject"
             className={inputClasses}
             {...register("subject", {
-              required: "Please provide a subject.",
+              required: "Subject is required.",
               minLength: { value: 4, message: "Subject should be at least 4 characters." },
             })}
             disabled={isPending}
@@ -129,15 +135,15 @@ const ContactForm = ({ countryCode }: ContactFormProps) => {
         <Field
           label="Message"
           required
-          helper="Include helpful context like products, sizes, or issue details."
+          helper="Detailed message about your inquiry"
           error={errors.message?.message}
         >
           <textarea
             rows={5}
-            placeholder="Please describe your issue or question..."
+            placeholder="Enter your message"
             className={`${inputClasses} min-h-[140px] resize-y`}
             {...register("message", {
-              required: "Message cannot be empty.",
+              required: "Message is required.",
               minLength: { value: 10, message: "Message should be at least 10 characters." },
             })}
             disabled={isPending}
@@ -172,16 +178,16 @@ const ContactForm = ({ countryCode }: ContactFormProps) => {
           </Field>
         </div>
         <div className="grid gap-5 small:grid-cols-2">
-          <Field label="Order number">
+          <Field label="Order Number" helper="If this relates to an order, please provide the order number">
             <input
               type="text"
-              placeholder="order_123456"
+              placeholder="If this relates to an order, please provide the order number"
               className={inputClasses}
               {...register("order_number")}
               disabled={isPending}
             />
           </Field>
-          <Field label="Phone number">
+          <Field label="Phone Number">
             <input
               type="tel"
               placeholder="+1 (555) 123-4567"

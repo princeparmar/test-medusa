@@ -397,18 +397,182 @@ Once both backend and frontend configuration steps are complete, the review bloc
 
 The contact page and newsletter blocks are powered by the [`medusa-contact-us`](https://www.npmjs.com/package/medusa-contact-us) plugin.
 
-1. **Backend**: Follow the plugin README to register it in `medusa-config.ts`, run the migrations, and configure notification templates/status workflows.
-2. **Storefront**: Set `MEDUSA_BACKEND_URL` and `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY`. The `/[countryCode]/contact` route will render the contact form using `submitContactRequest`, and the footer + contact page reuse `upsertContactSubscription`.
-3. **Custom forms**: Import helpers directly to avoid hand-written fetch calls:
+## Backend Setup
 
-   ```ts
-   import { submitContactRequest, upsertContactSubscription } from "medusa-contact-us"
-
-   await submitContactRequest({ email, payload: { subject, message } }, helperOptions)
-   await upsertContactSubscription({ email, status: "subscribed" }, helperOptions)
+1. **Install the plugin:**
+   ```bash
+   cd test-medusa
+   npm install medusa-contact-us --legacy-peer-deps
    ```
 
-`helperOptions` should always include `baseUrl` and a publishable API key (or a configured Medusa JS client) so requests can be authenticated on the Store API.
+2. **Register the plugin** in `medusa-configs/plugins/contact-us.ts` (already configured)
+
+3. **Register the modules** in `medusa-configs/modules.ts`:
+   ```typescript
+   contact_email_subscriptions: {
+     resolve: "medusa-contact-us/modules/contact-subscriptions",
+   },
+   contact_requests: {
+     resolve: "medusa-contact-us/modules/contact-requests",
+   },
+   ```
+
+4. **Run migrations:**
+   ```bash
+   npx medusa db:migrate
+   ```
+
+5. **Restart the server**
+
+For detailed backend integration, see [`../test-medusa/CONTACT_US_INTEGRATION.md`](../test-medusa/CONTACT_US_INTEGRATION.md).
+
+## Frontend Setup
+
+### Environment Variables
+
+Add to `.env.local`:
+
+```bash
+MEDUSA_BACKEND_URL=http://localhost:9000
+NEXT_PUBLIC_MEDUSA_BACKEND_URL=http://localhost:9000
+NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY=pk_your_publishable_key_here
+```
+
+**Note:** Create a publishable API key in the Medusa admin dashboard under `Settings → API Keys`.
+
+### Contact Form
+
+The contact form is already implemented at `/[countryCode]/contact` and includes:
+
+- **Required Fields:**
+  - Email (with validation)
+  - Subject
+  - Message
+
+- **Optional Fields:**
+  - Priority (Low, Medium, High, Urgent)
+  - Order Number
+  - Phone Number
+  - Preferred Contact Method (Email, Phone)
+  - Is Return Request (checkbox)
+
+### Using the Helpers
+
+The storefront uses the helper functions from `medusa-contact-us/helpers`:
+
+```ts
+import {
+  submitContactRequest,
+  upsertContactSubscription,
+  type StorefrontHelperOptions,
+} from "medusa-contact-us/helpers"
+
+// Submit contact request
+await submitContactRequest(
+  {
+    email: "customer@example.com",
+    payload: {
+      subject: "Order inquiry",
+      message: "I need help with my order",
+      priority: "high",
+      order_number: "order_123",
+    },
+    source: "contact_page",
+  },
+  {
+    baseUrl: process.env.MEDUSA_BACKEND_URL,
+    publishableApiKey: process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY,
+  }
+)
+
+// Email subscription
+await upsertContactSubscription(
+  {
+    email: "newsletter@example.com",
+    status: "subscribed",
+    source: "footer",
+  },
+  {
+    baseUrl: process.env.MEDUSA_BACKEND_URL,
+    publishableApiKey: process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY,
+  }
+)
+```
+
+### Server Actions
+
+The storefront includes server actions in `src/lib/data/contact.ts`:
+
+- `submitContactRequestAction` - Handles contact form submissions
+- `upsertContactSubscriptionAction` - Handles email subscriptions
+
+These actions:
+- Validate email format
+- Sanitize and format payload data
+- Handle errors gracefully
+- Revalidate Next.js cache on success
+
+### Custom Forms
+
+To create custom forms, use the helper functions directly:
+
+```ts
+"use server"
+
+import {
+  submitContactRequest,
+  type StorefrontHelperOptions,
+} from "medusa-contact-us/helpers"
+
+export async function customContactAction(formData: FormData) {
+  const options: StorefrontHelperOptions = {
+    baseUrl: process.env.MEDUSA_BACKEND_URL,
+    publishableApiKey: process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY,
+  }
+
+  await submitContactRequest(
+    {
+      email: formData.get("email") as string,
+      payload: {
+        subject: formData.get("subject") as string,
+        message: formData.get("message") as string,
+      },
+    },
+    options
+  )
+}
+```
+
+## Testing
+
+### Test Contact Form
+
+1. Navigate to `http://localhost:8000/[countryCode]/contact`
+2. Fill out the form with valid data
+3. Submit and verify success message
+4. Check admin panel for the contact request
+
+### Test with cURL
+
+See [`../test-medusa/CONTACT_US_CURL_EXAMPLES.md`](../test-medusa/CONTACT_US_CURL_EXAMPLES.md) for complete cURL examples.
+
+## Troubleshooting
+
+### Email Validation Errors
+
+If you see "Invalid email" errors:
+- Ensure email is properly formatted
+- Frontend validates email before submission
+- Server action normalizes email (trim + lowercase)
+
+### API Connection Errors
+
+- Verify `MEDUSA_BACKEND_URL` is correct
+- Check `NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY` is set
+- Ensure backend server is running
+- Check browser console for detailed errors
+
+For more troubleshooting, see [`../test-medusa/CONTACT_US_INTEGRATION.md`](../test-medusa/CONTACT_US_INTEGRATION.md).
 
 # Resources
 
