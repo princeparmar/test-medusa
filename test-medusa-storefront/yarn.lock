@@ -9856,6 +9856,13 @@ medusa-contact-us@^0.0.8:
   dependencies:
     zod "^3.23.8"
 
+medusa-product-helper@^0.0.12:
+  version "0.0.12"
+  resolved "https://registry.npmjs.org/medusa-product-helper/-/medusa-product-helper-0.0.12.tgz"
+  integrity sha512-Wm4tJPkM3MkxmrqBoG/UNFch17fCi0TWLQkfHZzbp8lFws+DvEjp+hRAFKuDfM8u53U55xYlB0QjK2U80eKXzg==
+  dependencies:
+    zod "^3.23.8"
+
 medusa-review-rating@^0.0.31:
   version "0.0.31"
   resolved "https://registry.npmjs.org/medusa-review-rating/-/medusa-review-rating-0.0.31.tgz"

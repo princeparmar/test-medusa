@@ -393,6 +393,35 @@ const productsWithRatings = await Promise.all(
 
 Once both backend and frontend configuration steps are complete, the review block renders automatically on product detail pages. For listing pages, follow the examples above to add rating displays.
 
+# Wishlist Feature
+
+The wishlist feature allows customers to save products they're interested in for later. It's powered by the `medusa-product-helper` plugin.
+
+## Quick Start
+
+1. **Backend**: Ensure `medusa-product-helper` is installed and configured (see backend README)
+2. **Database**: Run migrations:
+   ```bash
+   cd test-medusa
+   npx medusa plugin:db:generate
+   npx medusa db:migrate
+   ```
+3. **Frontend**: The wishlist feature is already integrated in:
+   - Product listing pages (heart icon on product cards)
+   - Product detail pages (wishlist button in product actions)
+
+## Documentation
+
+For detailed integration guide, see [WISHLIST_INTEGRATION.md](./WISHLIST_INTEGRATION.md)
+
+The documentation includes:
+- Helper functions reference
+- UI components usage
+- Integration examples
+- Authentication handling
+- Best practices
+- Troubleshooting
+
 # Contact & Subscriptions
 
 The contact page and newsletter blocks are powered by the [`medusa-contact-us`](https://www.npmjs.com/package/medusa-contact-us) plugin.

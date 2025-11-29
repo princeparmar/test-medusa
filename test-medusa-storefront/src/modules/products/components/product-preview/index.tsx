@@ -1,10 +1,13 @@
 import { Text } from "@medusajs/ui"
 import { listProducts } from "@lib/data/products"
 import { getProductPrice } from "@lib/util/get-product-price"
+import { retrieveCustomer } from "@lib/data/customer"
+import { getWishlistAction } from "@lib/data/wishlist"
 import { HttpTypes } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import Thumbnail from "../thumbnail"
 import PreviewPrice from "./price"
+import WishlistButton from "../wishlist-button"
 
 export default async function ProductPreview({
   product,
@@ -15,22 +18,29 @@ export default async function ProductPreview({
   isFeatured?: boolean
   region: HttpTypes.StoreRegion
 }) {
-  // const pricedProduct = await listProducts({
-  //   regionId: region.id,
-  //   queryParams: { id: [product.id!] },
-  // }).then(({ response }) => response.products[0])
-
-  // if (!pricedProduct) {
-  //   return null
-  // }
-
   const { cheapestPrice } = getProductPrice({
     product,
   })
 
+  // Check if customer is authenticated and get wishlist status
+  const customer = await retrieveCustomer()
+  const isAuthenticated = !!customer
+
+  let isInWishlist = false
+  if (isAuthenticated && product.id) {
+    try {
+      const wishlistResult = await getWishlistAction()
+      if (wishlistResult.success && wishlistResult.wishlist) {
+        isInWishlist = wishlistResult.wishlist.includes(product.id)
+      }
+    } catch (error) {
+      // Silently fail
+    }
+  }
+
   return (
-    <LocalizedClientLink href={`/products/${product.handle}`} className="group">
-      <div data-testid="product-wrapper">
+    <div className="relative group" data-testid="product-wrapper">
+      <LocalizedClientLink href={`/products/${product.handle}`} className="block">
         <Thumbnail
           thumbnail={product.thumbnail}
           images={product.images}
@@ -45,7 +55,19 @@ export default async function ProductPreview({
             {cheapestPrice && <PreviewPrice price={cheapestPrice} />}
           </div>
         </div>
-      </div>
-    </LocalizedClientLink>
+      </LocalizedClientLink>
+      {/* Wishlist button positioned absolutely over the thumbnail */}
+      {product.id && (
+        <div className="absolute top-2 right-2 z-10">
+          <WishlistButton
+            productId={product.id}
+            size="medium"
+            initialIsInWishlist={isInWishlist}
+            isAuthenticated={isAuthenticated}
+            className="bg-ui-bg-base/90 backdrop-blur-sm shadow-sm"
+          />
+        </div>
+      )}
+    </div>
   )
 }

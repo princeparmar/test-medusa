@@ -9018,9 +9018,10 @@ medusa-plugin-dynamic-config@^0.0.22:
   resolved "https://registry.npmjs.org/medusa-plugin-dynamic-config/-/medusa-plugin-dynamic-config-0.0.22.tgz"
   integrity sha512-aLumdEQRkx08OJn6/68FGvlJMTPPeubfFSN+486UI31Mu1jEE4IePXANF9WufTjCrHOgTCB1NWoZ0P/ABqsqCw==
 
-"medusa-product-helper@file:.yalc/medusa-product-helper":
-  version "0.0.10"
-  resolved "file:.yalc/medusa-product-helper"
+medusa-product-helper@^0.0.13:
+  version "0.0.13"
+  resolved "https://registry.npmjs.org/medusa-product-helper/-/medusa-product-helper-0.0.13.tgz"
+  integrity sha512-o8Fjx7/inbMpKe28mpcmIdk5WSCNrvURDDCQAEmQm9sGpyVUCNVLLlRLFSYp0aWTt+Jw/HeC6BjakseGd5FZhg==
   dependencies:
     zod "^3.23.8"
 

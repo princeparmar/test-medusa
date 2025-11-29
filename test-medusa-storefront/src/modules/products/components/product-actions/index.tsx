@@ -6,6 +6,7 @@ import { HttpTypes } from "@medusajs/types"
 import { Button } from "@medusajs/ui"
 import Divider from "@modules/common/components/divider"
 import OptionSelect from "@modules/products/components/product-actions/option-select"
+import WishlistButton from "@modules/products/components/wishlist-button"
 import { isEqual } from "lodash"
 import { useParams, usePathname, useSearchParams } from "next/navigation"
 import { useEffect, useMemo, useRef, useState } from "react"
@@ -17,6 +18,8 @@ type ProductActionsProps = {
   product: HttpTypes.StoreProduct
   region: HttpTypes.StoreRegion
   disabled?: boolean
+  isAuthenticated?: boolean
+  isInWishlist?: boolean
 }
 
 const optionsAsKeymap = (
@@ -31,6 +34,8 @@ const optionsAsKeymap = (
 export default function ProductActions({
   product,
   disabled,
+  isAuthenticated = false,
+  isInWishlist = false,
 }: ProductActionsProps) {
   const router = useRouter()
   const pathname = usePathname()
@@ -161,6 +166,19 @@ export default function ProductActions({
         </div>
 
         <ProductPrice product={product} variant={selectedVariant} />
+
+        {/* Wishlist button */}
+        {product.id && (
+          <div className="flex items-center justify-center py-2">
+            <WishlistButton
+              productId={product.id}
+              size="medium"
+              showLabel={true}
+              initialIsInWishlist={isInWishlist}
+              isAuthenticated={isAuthenticated}
+            />
+          </div>
+        )}
 
         <Button
           onClick={handleAddToCart}

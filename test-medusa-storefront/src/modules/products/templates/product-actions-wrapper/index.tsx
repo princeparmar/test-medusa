@@ -1,4 +1,6 @@
 import { listProducts } from "@lib/data/products"
+import { retrieveCustomer } from "@lib/data/customer"
+import { getWishlistAction } from "@lib/data/wishlist"
 import { HttpTypes } from "@medusajs/types"
 import ProductActions from "@modules/products/components/product-actions"
 
@@ -21,5 +23,28 @@ export default async function ProductActionsWrapper({
     return null
   }
 
-  return <ProductActions product={product} region={region} />
+  // Check customer authentication and wishlist status
+  const customer = await retrieveCustomer()
+  const isAuthenticated = !!customer
+
+  let isInWishlist = false
+  if (isAuthenticated && product.id) {
+    try {
+      const wishlistResult = await getWishlistAction()
+      if (wishlistResult.success && wishlistResult.wishlist) {
+        isInWishlist = wishlistResult.wishlist.includes(product.id)
+      }
+    } catch (error) {
+      // Silently fail
+    }
+  }
+
+  return (
+    <ProductActions
+      product={product}
+      region={region}
+      isAuthenticated={isAuthenticated}
+      isInWishlist={isInWishlist}
+    />
+  )
 }
