@@ -9856,10 +9856,10 @@ medusa-contact-us@^0.0.8:
   dependencies:
     zod "^3.23.8"
 
-medusa-review-rating@^0.0.26:
-  version "0.0.26"
-  resolved "https://registry.npmjs.org/medusa-review-rating/-/medusa-review-rating-0.0.26.tgz"
-  integrity sha512-wO6LUbm5wTbFuC1Z6vNHlcXnm/TpyGKh2m6TNt2BB2CV13VJn7XeKm6q/2sk5sysQc3+7mQBhDRmbHWH6FFf7A==
+medusa-review-rating@^0.0.31:
+  version "0.0.31"
+  resolved "https://registry.npmjs.org/medusa-review-rating/-/medusa-review-rating-0.0.31.tgz"
+  integrity sha512-PsZMoUkPUrfyfujAgu1Y3FcsUJFH3VS2otXi+4ehQgOzA7ajGLgJa8ieCPxn/o3nZEdYMRdWH9PXLLg8oy8Qgw==
 
 merge-descriptors@1.0.3:
   version "1.0.3"

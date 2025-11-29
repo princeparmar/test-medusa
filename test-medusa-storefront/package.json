@@ -23,7 +23,7 @@
     "@stripe/stripe-js": "^8.2.0",
     "lodash": "^4.17.21",
     "medusa-contact-us": "^0.0.8",
-    "medusa-review-rating": "^0.0.26",
+    "medusa-review-rating": "^0.0.31",
     "next": "^15.3.1",
     "pg": "^8.11.3",
     "qs": "^6.12.1",

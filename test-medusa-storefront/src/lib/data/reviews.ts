@@ -78,7 +78,20 @@ export const submitReviewAction = async (
   }
 
   try {
-    const reviewOptions = await getReviewHelperOptions(true)
+    const publishableKey = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY
+    const baseUrl = getReviewBaseUrl()
+
+    // Create authenticated options with JWT token
+    const authenticatedOptions: StorefrontHelperOptions = {
+      baseUrl,
+      publishableApiKey: publishableKey,
+      headers: {
+        Authorization: authHeaders.authorization, // JWT token from customer login
+        "Content-Type": "application/json",
+      },
+      fetchImpl: noStoreFetch,
+    }
+
     await submitReview(
       {
         product_id: productId,
@@ -86,14 +99,7 @@ export const submitReviewAction = async (
         title: title.trim(),
         description: description.trim(),
       },
-      {
-        ...reviewOptions,
-        headers: {
-          ...reviewOptions.headers,
-          ...(authHeaders as Record<string, string>),
-          "Content-Type": "application/json",
-        },
-      }
+      authenticatedOptions
     )
 
     if (countryCode && productHandle) {

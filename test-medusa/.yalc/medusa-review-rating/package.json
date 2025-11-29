@@ -1,6 +1,6 @@
 {
   "name": "medusa-review-rating",
-  "version": "0.0.30",
+  "version": "0.0.31",
   "description": "A starter for Medusa plugins.",
   "author": "Medusa (https://medusajs.com)",
   "license": "MIT",
@@ -46,5 +46,5 @@
   "engines": {
     "node": ">=20"
   },
-  "yalcSig": "8959ee4181328d276c429ac8c57feeee"
+  "yalcSig": "e63ecb97e425675e6816e17b177ea428"
 }

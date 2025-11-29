@@ -164,15 +164,93 @@ The storefront ships with built-in support for the [`medusa-review-rating`](http
 
 ## 3. Using the helpers
 
-Import review helpers anywhere in your app code:
+### Submitting a Review (with Authentication)
+
+To submit a review, you need to pass a JWT token in the `Authorization` header. The storefront automatically handles this through the `getAuthHeaders()` helper which retrieves the token from the customer's session cookie.
+
+**Server Action Example** (recommended for Next.js):
+
+```ts
+"use server"
+
+import { getAuthHeaders } from "@lib/data/cookies"
+import {
+  submitReview,
+  type StorefrontHelperOptions,
+} from "medusa-review-rating/helpers"
+
+export const submitReviewAction = async (formData: FormData) => {
+  const authHeaders = await getAuthHeaders()
+  
+  // Verify user is authenticated
+  if (!("authorization" in authHeaders)) {
+    return { status: "error", message: "Please sign in to leave a review." }
+  }
+
+  const publishableKey = process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY
+  const baseUrl = process.env.MEDUSA_BACKEND_URL || "http://localhost:9000"
+
+  // Create authenticated options with JWT token
+  const authenticatedOptions: StorefrontHelperOptions = {
+    baseUrl,
+    publishableApiKey: publishableKey,
+    headers: {
+      Authorization: authHeaders.authorization, // JWT token from customer login
+      "Content-Type": "application/json",
+    },
+  }
+
+  await submitReview(
+    {
+      product_id: "prod_123",
+      rating: 5,
+      title: "Amazing product",
+      description: "Highly recommend",
+    },
+    authenticatedOptions
+  )
+}
+```
+
+**Direct Helper Usage** (for custom implementations):
 
 ```ts
 import {
   submitReview,
-  listCustomerReviews,
-  listCustomerProductReviews,
-  listProductReviews,
+  type StorefrontHelperOptions,
+} from "medusa-review-rating/helpers"
+
+// Option 1: Using JWT token (recommended)
+const authenticatedOptions: StorefrontHelperOptions = {
+  baseUrl: "https://store.myshop.com",
+  publishableApiKey: "pk_your_publishable_api_key_here",
+  headers: {
+    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...", // JWT token from customer login
+  },
+}
+
+// Submit a review with authentication
+await submitReview(
+  {
+    product_id: "prod_123",
+    rating: 5,
+    title: "Amazing product",
+    description: "Highly recommend",
+  },
+  authenticatedOptions
+)
+```
+
+### Listing Reviews on Product Listing Pages
+
+To display reviews and ratings on product listing pages (store, collections, categories), you can fetch product ratings and display them on each product card.
+
+**Example: Fetching ratings for multiple products**
+
+```ts
+import {
   getProductRating,
+  listProductReviews,
   type StorefrontHelperOptions,
 } from "medusa-review-rating/helpers"
 
@@ -181,32 +259,139 @@ const options: StorefrontHelperOptions = {
   publishableApiKey: process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY,
 }
 
-await submitReview(
-  { product_id: "prod_123", rating: 5, title: "Great!", description: "Loved it" },
-  options
+// Fetch rating for a single product
+const rating = await getProductRating("prod_123", options)
+// Returns: { average_rating: 4.5, total_reviews: 42, total_rating_sum: 189 }
+
+// Fetch reviews for a product (with pagination)
+const { reviews } = await listProductReviews("prod_123", options)
+// Returns: { reviews: ReviewDTO[], count: number, limit: number, offset: number }
+```
+
+**Example: Displaying ratings on product cards**
+
+```tsx
+// In your ProductPreview component
+import { getProductRating } from "medusa-review-rating/helpers"
+
+export default async function ProductPreview({ product }: { product: Product }) {
+  const rating = await getProductRating(product.id, {
+    baseUrl: process.env.MEDUSA_BACKEND_URL,
+    publishableApiKey: process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY,
+  })
+
+  return (
+    <div>
+      <ProductImage product={product} />
+      <h3>{product.title}</h3>
+      
+      {/* Display rating summary */}
+      {rating.total_reviews > 0 && (
+        <div className="flex items-center gap-2">
+          <StarRating rating={rating.average_rating} />
+          <span>({rating.total_reviews} reviews)</span>
+        </div>
+      )}
+      
+      <ProductPrice product={product} />
+    </div>
+  )
+}
+```
+
+**Example: Batch fetching ratings for multiple products**
+
+```ts
+// Fetch ratings for all products in a listing
+const products = await listProducts({ /* your query */ })
+
+const ratings = await Promise.all(
+  products.map((product) =>
+    getProductRating(product.id, options).then((rating) => ({
+      productId: product.id,
+      ...rating,
+    }))
+  )
 )
 
-const rating = await getProductRating("prod_123", options)
+// Create a map for easy lookup
+const ratingsMap = new Map(
+  ratings.map((r) => [r.productId, r])
+)
 ```
+
+### Using Medusa JS SDK Client
 
 If you already have an instantiated Medusa JS SDK client, you can pass it instead of `baseUrl` + `publishableApiKey`:
 
 ```ts
 import { Medusa } from "@medusajs/js-sdk"
-const medusa = new Medusa({ baseUrl: "https://store.myshop.com", publishableKey: "pk_xxx" })
 
-const rating = await getProductRating("prod_123", { client: medusa })
+const medusa = new Medusa({ 
+  baseUrl: "https://store.myshop.com", 
+  publishableKey: "pk_xxx" 
+})
+
+// For authenticated requests, add the token
+const rating = await getProductRating("prod_123", { 
+  client: medusa,
+  headers: {
+    Authorization: "Bearer <jwt_token>"
+  }
+})
 ```
 
 ## 4. Frontend UI
 
-This starter already mounts a `ProductReviewsSection` on the product page:
+### Product Detail Page
 
-- Signed-in customers can submit reviews through the form.
+This starter already mounts a `ProductReviewsSection` on the product detail page (`/products/[handle]`):
+
+- Signed-in customers can submit reviews through the form with automatic JWT authentication.
 - Logged-out visitors see a sign-in prompt.
 - Public reviews and rating summaries are fetched during SSR/Suspense via the helpers above.
 
-Once both backend and frontend configuration steps are complete, the review block renders automatically without additional wiring.
+The review submission automatically includes the customer's JWT token from their session cookie, ensuring authenticated requests.
+
+### Product Listing Pages
+
+To add reviews/ratings to product listing pages (store, collections, categories), you can:
+
+1. **Fetch ratings in your product listing component:**
+
+```tsx
+// In paginated-products.tsx or similar
+import { getProductRating } from "medusa-review-rating/helpers"
+
+const products = await listProducts({ /* your query */ })
+
+// Fetch ratings for all products
+const productsWithRatings = await Promise.all(
+  products.map(async (product) => {
+    const rating = await getProductRating(product.id, {
+      baseUrl: process.env.MEDUSA_BACKEND_URL,
+      publishableApiKey: process.env.NEXT_PUBLIC_MEDUSA_PUBLISHABLE_KEY,
+    })
+    return { ...product, rating }
+  })
+)
+```
+
+2. **Display ratings in ProductPreview component:**
+
+```tsx
+// In product-preview/index.tsx
+{product.rating && product.rating.total_reviews > 0 && (
+  <div className="flex items-center gap-1 mt-2">
+    <StarRating rating={product.rating.average_rating} />
+    <span className="text-sm text-gray-600">
+      ({product.rating.total_reviews})
+    </span>
+  </div>
+)}
+```
+
+Once both backend and frontend configuration steps are complete, the review block renders automatically on product detail pages. For listing pages, follow the examples above to add rating displays.
 
 # Contact & Subscriptions
 

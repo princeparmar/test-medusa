@@ -292,7 +292,7 @@ const options = {
   publishableApiKey: "pk_your_publishable_api_key_here", // Required for public endpoints
 }
 
-// Submit a review
+// Submit a review (REQUIRES customer authentication - see authentication example below)
 await submitReview(
   {
     product_id: "prod_123",
@@ -300,7 +300,12 @@ await submitReview(
     title: "Amazing product",
     description: "Highly recommend",
   },
-  options
+  {
+    ...options,
+    headers: {
+      Authorization: "Bearer your_jwt_token_here", // Required for authenticated endpoints
+    },
+  }
 )
 
 // Fetch all reviews authored by the current customer (requires authentication)
@@ -354,16 +359,38 @@ const productReviews = await listProductReviews("prod_123", {
 For authenticated requests, include the customer's session cookie or JWT token in the `headers` option:
 
 ```ts
+// Option 1: Using JWT token (recommended)
 const authenticatedOptions = {
-  ...options,
+  baseUrl: "https://store.myshop.com",
+  publishableApiKey: "pk_your_publishable_api_key_here",
   headers: {
-    Cookie: "connect.sid=your_session_cookie", // or
-    Authorization: "Bearer customer_jwt_token",
+    Authorization: "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...", // JWT token from customer login
   },
 }
 
-const myReviews = await listCustomerReviews({}, authenticatedOptions)
+// Submit a review with authentication
+await submitReview(
+  {
+    product_id: "prod_123",
+    rating: 5,
+    title: "Amazing product",
+    description: "Highly recommend",
+  },
+  authenticatedOptions
+)
+
+// Option 2: Using session cookie
+const authenticatedOptionsWithCookie = {
+  ...options,
+  headers: {
+    Cookie: "connect.sid=your_session_cookie",
+  },
+}
+
+const myReviews = await listCustomerReviews({}, authenticatedOptionsWithCookie)
 ```
+
+**Important:** The `submitReview` helper function requires customer authentication. If you get a 401 error, ensure you're passing the `Authorization` header with a valid JWT token or a `Cookie` header with a valid session cookie.
 
 
 ### Admin Endpoints
