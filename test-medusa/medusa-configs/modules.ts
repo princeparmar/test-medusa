@@ -30,11 +30,5 @@ export const modulesConfig = {
   reviews: {
     resolve: "medusa-review-rating",
   },
-  contact_requests: {
-    resolve: "medusa-contact-us/modules/contact-requests",
-  },
-  contact_email_subscriptions: {
-    resolve: "medusa-contact-us/modules/contact-subscriptions",
-  },
 }
 

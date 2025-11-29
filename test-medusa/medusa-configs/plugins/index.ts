@@ -1,5 +1,4 @@
 import { adminCategoryPlugin } from './admin-category'
-import { contactUsPlugin } from './contact-us'
 import { customerRegistrationPlugin } from './customer-registration'
 import { dynamicConfigPlugin } from './dynamic-config'
 import { improveAdminPlugin } from './improve-admin'
@@ -9,7 +8,6 @@ import { reviewRatingPlugin } from './review-rating'
 export const pluginsConfig = [
   reviewRatingPlugin,
   adminCategoryPlugin,
-  contactUsPlugin,
   customerRegistrationPlugin,
   ...(process.env.ENABLE_IMPROVE_ADMIN === "true" ? [improveAdminPlugin] : []),
   dynamicConfigPlugin,
@@ -19,7 +17,6 @@ export const pluginsConfig = [
 export {
   adminCategoryPlugin,
   customerRegistrationPlugin,
-  contactUsPlugin,
   dynamicConfigPlugin,
   improveAdminPlugin,
   productHelperPlugin,
