@@ -6894,9 +6894,10 @@ csv-parse@^5.6.0:
   resolved "https://registry.npmjs.org/csv-parse/-/csv-parse-5.6.0.tgz"
   integrity sha512-l3nz3euub2QMg5ouu5U09Ew9Wf6/wQ8I++ch1loQ0ljmzhmfZYrH9fflS22i/PQEvsPvxCwxgz5q7UB8K1JO4Q==
 
-"customer-registration@file:.yalc/customer-registration":
+customer-registration@^0.0.104:
   version "0.0.104"
-  resolved "file:.yalc/customer-registration"
+  resolved "https://registry.npmjs.org/customer-registration/-/customer-registration-0.0.104.tgz"
+  integrity sha512-4FZmxHVMZ3nV+vyRWvIM+LtD/LGXyrwvHjQVl1sRYvvx0lfOhDSOZOF12LUw99TNcLBmDQrWp28/fzo2PZ8NrQ==
   dependencies:
     jsonwebtoken "^9.0.2"
 
@@ -9002,9 +9003,10 @@ media-typer@0.3.0:
   resolved "https://registry.npmjs.org/media-typer/-/media-typer-0.3.0.tgz"
   integrity sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==
 
-"medusa-admin-category@file:.yalc/medusa-admin-category":
+medusa-admin-category@^0.0.6:
   version "0.0.6"
-  resolved "file:.yalc/medusa-admin-category"
+  resolved "https://registry.npmjs.org/medusa-admin-category/-/medusa-admin-category-0.0.6.tgz"
+  integrity sha512-55TJj2jF+sE/pjSVEX22QViiBdTtSIL74I7cSymAiiJp5eOwpC2JrJvvfnjVMBLoxTmHDeZY5WoPU4STeQFEtg==
 
 medusa-contact-us@^0.0.21:
   version "0.0.21"
@@ -9018,16 +9020,17 @@ medusa-plugin-dynamic-config@^0.0.22:
   resolved "https://registry.npmjs.org/medusa-plugin-dynamic-config/-/medusa-plugin-dynamic-config-0.0.22.tgz"
   integrity sha512-aLumdEQRkx08OJn6/68FGvlJMTPPeubfFSN+486UI31Mu1jEE4IePXANF9WufTjCrHOgTCB1NWoZ0P/ABqsqCw==
 
-medusa-product-helper@^0.0.13:
-  version "0.0.13"
-  resolved "https://registry.npmjs.org/medusa-product-helper/-/medusa-product-helper-0.0.13.tgz"
-  integrity sha512-o8Fjx7/inbMpKe28mpcmIdk5WSCNrvURDDCQAEmQm9sGpyVUCNVLLlRLFSYp0aWTt+Jw/HeC6BjakseGd5FZhg==
+medusa-product-helper@^0.0.18:
+  version "0.0.18"
+  resolved "https://registry.npmjs.org/medusa-product-helper/-/medusa-product-helper-0.0.18.tgz"
+  integrity sha512-WHGGKjMCwafBhnDMRfJrI5lQbtvDua+9qrJUlEn8wKXCCT5uns1F9fOVXxGVH3utawGeT7h6/BcZ5K7roHsY5w==
   dependencies:
     zod "^3.23.8"
 
-"medusa-review-rating@file:.yalc/medusa-review-rating":
+medusa-review-rating@^0.0.31:
   version "0.0.31"
-  resolved "file:.yalc/medusa-review-rating"
+  resolved "https://registry.npmjs.org/medusa-review-rating/-/medusa-review-rating-0.0.31.tgz"
+  integrity sha512-PsZMoUkPUrfyfujAgu1Y3FcsUJFH3VS2otXi+4ehQgOzA7ajGLgJa8ieCPxn/o3nZEdYMRdWH9PXLLg8oy8Qgw==
 
 merge-descriptors@1.0.3:
   version "1.0.3"

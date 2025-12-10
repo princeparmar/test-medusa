@@ -9849,17 +9849,17 @@ media-typer@0.3.0:
   resolved "https://registry.npmjs.org/media-typer/-/media-typer-0.3.0.tgz"
   integrity sha512-dq+qelQ9akHpcOl/gUVRTxVIOkAJ1wR3QAvb4RsVjS8oVoFjDGTc679wJYmUmknUF5HwMLOgb5O+a3KxfWapPQ==
 
-medusa-contact-us@^0.0.8:
-  version "0.0.8"
-  resolved "https://registry.npmjs.org/medusa-contact-us/-/medusa-contact-us-0.0.8.tgz"
-  integrity sha512-wG40yn33PhfQ3WzueHmpLHVyOKzedYqgM3knGmb7kr73tYTqrTSBVLcLsZL/XVAT/+EoPt9cg4/2Illmw8ybCQ==
+medusa-contact-us@^0.0.21:
+  version "0.0.21"
+  resolved "https://registry.npmjs.org/medusa-contact-us/-/medusa-contact-us-0.0.21.tgz"
+  integrity sha512-tUK1uhKhcl7n8cfiNVo38m71bxiHisFdHLUMnTmddjpkM8VaotgpHCtc8SAw1SvBXEjDsti4QKcxkFHxdz+NWA==
   dependencies:
     zod "^3.23.8"
 
-medusa-product-helper@^0.0.12:
-  version "0.0.12"
-  resolved "https://registry.npmjs.org/medusa-product-helper/-/medusa-product-helper-0.0.12.tgz"
-  integrity sha512-Wm4tJPkM3MkxmrqBoG/UNFch17fCi0TWLQkfHZzbp8lFws+DvEjp+hRAFKuDfM8u53U55xYlB0QjK2U80eKXzg==
+medusa-product-helper@^0.0.18:
+  version "0.0.18"
+  resolved "https://registry.npmjs.org/medusa-product-helper/-/medusa-product-helper-0.0.18.tgz"
+  integrity sha512-WHGGKjMCwafBhnDMRfJrI5lQbtvDua+9qrJUlEn8wKXCCT5uns1F9fOVXxGVH3utawGeT7h6/BcZ5K7roHsY5w==
   dependencies:
     zod "^3.23.8"
 

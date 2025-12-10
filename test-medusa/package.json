@@ -28,12 +28,12 @@
     "@medusajs/medusa": "2.11.3",
     "@medusajs/notification": "^2.11.3",
     "@tsc_tech/medusa-plugin-smtp": "^0.0.3",
-    "customer-registration": "file:.yalc/customer-registration",
-    "medusa-admin-category": "file:.yalc/medusa-admin-category",
+    "customer-registration": "^0.0.104",
+    "medusa-admin-category": "^0.0.6",
     "medusa-contact-us": "^0.0.21",
     "medusa-plugin-dynamic-config": "^0.0.22",
-    "medusa-product-helper": "^0.0.13",
-    "medusa-review-rating": "file:.yalc/medusa-review-rating",
+    "medusa-product-helper": "^0.0.18",
+    "medusa-review-rating": "^0.0.31",
     "nodemailer": "^7.0.10"
   },
   "devDependencies": {
